@@ -30,7 +30,7 @@ class SignIn extends Component {
 
     return (
       <div className="sign-in">
-        <h2>I already have an account</h2>
+        <h2 className="title">I already have an account</h2>
         <span>Sign in with your email and password</span>
 
         <form onSubmit={this.handleSubmit}>
@@ -38,7 +38,7 @@ class SignIn extends Component {
             type="email"
             name="email"
             value={email}
-            label="email"
+            label="Email"
             required
             handleChange={this.handleChange}
           />
@@ -46,7 +46,7 @@ class SignIn extends Component {
             type="password"
             name="password"
             value={password}
-            label="password"
+            label="Password"
             required
             handleChange={this.handleChange}
           />

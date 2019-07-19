@@ -7,7 +7,7 @@ import Shoppage from './pages/shoppage/Shoppage'
 import Authpage from './pages/authpage/Authpage'
 import Header from './components/header/Header'
 
-import { auth } from './server/utils'
+import { auth, createUserProfileDoc } from './server/utils'
 
 class App extends Component {
   constructor(props) {
@@ -21,9 +21,20 @@ class App extends Component {
   unsubscribeFromAuth = null
 
   componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(currentUser =>
-      this.setState({ currentUser })
-    )
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async user => {
+      if (user) {
+        const userRef = await createUserProfileDoc(user)
+        userRef.onSnapshot(snapShot => {
+          const currentUser = {
+            id: snapShot.id,
+            ...snapShot.data()
+          }
+          this.setState({ currentUser })
+          console.log(this.state)
+        })
+      }
+      this.setState({ currentUser: user })
+    })
   }
 
   componentWillUnmount() {
