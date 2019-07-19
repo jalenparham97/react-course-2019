@@ -3,7 +3,21 @@ import { Link } from 'react-router-dom'
 import { ReactComponent as Logo } from '../../assets/img/crown.svg'
 import './Header.scss'
 
-const Header = () => {
+import { auth } from '../../server/utils'
+
+const showCorrectLink = currentUser => {
+  return currentUser ? (
+    <div className="option" onClick={() => auth.signOut()}>
+      SIGN OUT
+    </div>
+  ) : (
+    <Link className="option" to="/auth">
+      SIGN IN
+    </Link>
+  )
+}
+
+const Header = ({ currentUser }) => {
   return (
     <div className="header">
       <Link className="logo-container" to="/">
@@ -16,9 +30,7 @@ const Header = () => {
         <Link className="option" to="/contact">
           CONTACT
         </Link>
-        <Link className="option" to="/auth">
-          SIGN UP
-        </Link>
+        {showCorrectLink(currentUser)}
       </div>
     </div>
   )

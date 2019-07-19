@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import FormInput from '../../UI/form-input/FormInput'
+import Button from '../../UI/button/Button'
 import './SignIn.scss'
 
-export class SignIn extends Component {
+import { signInWithGoogle } from '../../../server/utils'
+
+class SignIn extends Component {
   constructor(props) {
     super(props)
 
@@ -47,7 +50,12 @@ export class SignIn extends Component {
             required
             handleChange={this.handleChange}
           />
-          <input type="submit" value="Submit" />
+          <div className="buttons">
+            <Button type="submit">Sign In </Button>
+            <Button onClick={signInWithGoogle} isGoogleSignIn>
+              Sign In With Google
+            </Button>
+          </div>
         </form>
       </div>
     )
