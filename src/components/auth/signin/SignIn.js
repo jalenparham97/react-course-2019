@@ -4,6 +4,7 @@ import Button from '../../UI/button/Button'
 import './SignIn.scss'
 
 import { signInWithGoogle } from '../../../server/utils'
+import { auth } from '../../../server/utils'
 
 class SignIn extends Component {
   constructor(props) {
@@ -15,8 +16,15 @@ class SignIn extends Component {
     }
   }
 
-  handleSubmit = e => {
+  handleSubmit = async e => {
     e.preventDefault()
+    const { email, password } = this.state
+    try {
+      await auth.signInWithEmailAndPassword(email, password)
+      this.setState({ email: '', password: '' })
+    } catch (error) {
+      console.log(error)
+    }
     this.setState({ email: '', password: '' })
   }
 
